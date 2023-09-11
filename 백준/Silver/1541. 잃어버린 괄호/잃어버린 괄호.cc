@@ -11,7 +11,7 @@ void Solve()
     string num = "";
     bool minus = false;
 
-    for (int i = 0; i < static_cast<int>(in.size()); i++)
+    for (int i = 0; i < in.size(); i++)
     {
         if (in[i] == '-')
         {
