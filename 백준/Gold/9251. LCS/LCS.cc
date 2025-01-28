@@ -1,66 +1,33 @@
 #include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 
 using namespace std;
 
-#define MAX_SIZE 1001
+string a;
+string b;
 
-int memo[MAX_SIZE][MAX_SIZE];
-
-char a[MAX_SIZE];
-char b[MAX_SIZE];
-
-int max(int a, int b)
-{
-    return a > b ? a : b;
-}
-
-int lcsM(int m, int n)
-{
-    if (m == 0 || n == 0)
-    {
-        return 0;
-    }
-    if (memo[m][n] != -1)
-    {
-        return memo[m][n];
-    }
-
-    else if (a[m - 1] == b[n - 1])
-    {
-        return memo[m][n] = lcsM(m - 1, n - 1) + 1;
-    }
-    else
-    {
-        return memo[m][n] = max(lcsM(m - 1, n), lcsM(m, n - 1));
-    }
-}
+int memo[1001][1001];
 
 int main()
 {
-    cin >> a;
-    cin >> b;
+    cin >> a >> b;
 
-    int asize = 0;
-    int bsize = 0;
-
-    while (a[asize])
-        asize++;
-    while (b[bsize])
-        bsize++;
-    for (int m = 0; m <= asize; m++)
+    for (int i = 0; i < a.size(); i++)
     {
-        for (int n = 0; n <= bsize; n++)
+        for (int j = 0; j < b.size(); j++)
         {
-            if (m == 0 || n == 0)
+            if (a[i] == b[j])
             {
-                memo[m][n] = 0;
+                memo[i + 1][j + 1] = memo[i][j] + 1;
             }
             else
             {
-                memo[m][n] = -1;
+                memo[i + 1][j + 1] = max(memo[i][j + 1], memo[i + 1][j]);
             }
         }
     }
 
-    cout << lcsM(asize, bsize) << '\n';
+    cout << memo[a.size()][b.size()] << endl;
 }
